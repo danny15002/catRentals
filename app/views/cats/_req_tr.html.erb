@@ -1,6 +1,7 @@
 <tr>
   <td><%= req.start_date %></td>
   <td><%= req.end_date %></td>
+  <% if current_user == cat.owner %>
   <td>
     <% if req.pending? %>
         <%= button_to "Approve", approve_cat_rental_request_url(req) %>
@@ -9,4 +10,10 @@
       <%= req.status %>
     <% end %>
   </td>
+  <% else %>
+  <td>
+    <%= req.status %>
+  </td>
+  <% end %>
+  <td><%= req.user.user_name %></td>
 </tr>

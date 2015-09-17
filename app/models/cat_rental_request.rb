@@ -1,7 +1,21 @@
+# == Schema Information
+#
+# Table name: cat_rental_requests
+#
+#  id         :integer          not null, primary key
+#  cat_id     :integer          not null
+#  end_date   :date             not null
+#  start_date :date             not null
+#  status     :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class CatRentalRequest < ActiveRecord::Base
   STATUS_STATES = %w(APPROVED DENIED PENDING)
 
   belongs_to :cat
+  belongs_to :user
 
   after_initialize :assign_pending_status
 
@@ -10,6 +24,7 @@ class CatRentalRequest < ActiveRecord::Base
     :end_date,
     :start_date,
     :status,
+    :user_id,
     presence: true
   )
   validates :status, inclusion: STATUS_STATES
